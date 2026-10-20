@@ -36,7 +36,12 @@ export default function OwnerLogin() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      const data = await res.json();
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        data = { error: `Server error (${res.status}). Please check server logs or try again.` };
+      }
 
       if (!res.ok) {
         setMsg(data.error || "Authentication failed. Please verify your credentials.");
@@ -51,7 +56,7 @@ export default function OwnerLogin() {
       }
       location.href = "/owner";
     } catch (err) {
-      setMsg("Connection error. Please try again.");
+      setMsg("Connection error. Please check your network and try again.");
     } finally {
       setLoading(false);
     }

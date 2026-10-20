@@ -23,6 +23,7 @@ export async function POST(req) {
     const token = await tokenFor(user);
     return Response.json({ token, user });
   } catch (err) {
-    return Response.json({ error: "Login failed" }, { status: 500 });
+    console.error("POST /api/auth/login error:", err);
+    return Response.json({ error: "Login failed. Please check server logs or credentials." }, { status: 500 });
   }
 }

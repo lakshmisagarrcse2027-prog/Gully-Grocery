@@ -31,7 +31,12 @@ export default function CustomerLogin() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      const d = await res.json();
+      let d = {};
+      try {
+        d = await res.json();
+      } catch (jsonErr) {
+        d = { error: `Server error (${res.status}). Please check server logs or try again.` };
+      }
 
       if (!res.ok) {
         setMsg(d.error || "Authentication failed. Please verify your details.");
@@ -43,7 +48,7 @@ export default function CustomerLogin() {
       localStorage.setItem("user", JSON.stringify(d.user));
       location.href = "/";
     } catch (err) {
-      setMsg("Connection error. Please try again.");
+      setMsg("Connection error. Please check your network and try again.");
     } finally {
       setLoading(false);
     }
