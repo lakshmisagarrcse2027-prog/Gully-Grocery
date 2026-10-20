@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  serverExternalPackages: ["sql.js"],
-};
+const nextConfig = {};
 
 export default nextConfig;
+
